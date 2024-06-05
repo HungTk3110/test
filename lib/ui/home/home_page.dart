@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:qsoft_test/common/app_text_styles.dart';
 import 'package:qsoft_test/ui/home/home_cubit.dart';
 
 class HomePage extends StatefulWidget {
@@ -13,26 +14,37 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   late HomeCubit cubit;
-  GlobalKey<ScaffoldState> _key = GlobalKey();
-  late TabController _tabController;
 
   @override
   void initState() {
-    cubit = BlocProvider.of(context);
-    _tabController = TabController(
-      initialIndex: 0,
-      length: 2,
-      animationDuration: const Duration(milliseconds: 500),
-      vsync: this,
-    );
+    cubit = BlocProvider.of<HomeCubit>(context);
+    cubit.initData();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: _key,
       backgroundColor: Colors.white,
+      appBar: AppBar(
+        backgroundColor: Colors.yellow.shade800,
+        title: Text(
+          'Home',
+          style: AppTextStyle.whiteS18W500,
+        ),
+        centerTitle: true,
+        actions: [
+          CupertinoButton(
+            padding: EdgeInsets.zero,
+            onPressed: () {  },
+            child: Icon(
+              Icons.shopping_cart_outlined,
+              color: Colors.white,
+            ),
+          ),
+          SizedBox(width: 16.w)
+        ],
+      ),
       body: _buildBodyWidget(),
     );
   }

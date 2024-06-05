@@ -5,6 +5,8 @@ import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:qsoft_test/app.dart';
 import 'package:qsoft_test/cubit/app/app_config_bloc.dart';
+import 'package:qsoft_test/repositories/product_repo.dart';
+import 'package:qsoft_test/ui/cart/cart_cubit.dart';
 import 'package:qsoft_test/ui/home/home_cubit.dart';
 
 void main() async{
@@ -19,6 +21,7 @@ void main() async{
     MultiBlocProvider(
       providers: [
         BlocProvider(create: (_) => HomeCubit()),
+        BlocProvider(create: (_) => CartCubit()),
         BlocProvider(create: (_) => AppConfigBloc()),
       ],
       child: const MyApp(),

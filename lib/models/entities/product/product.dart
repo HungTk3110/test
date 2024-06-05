@@ -1,17 +1,20 @@
 import 'package:isar/isar.dart';
 
 part 'product.g.dart';
+
 @collection
 class ProductEntity {
   Id id = Isar.autoIncrement;
   double? numberOfProducts;
   int? price;
   String? nameProduct;
+  String? imgProduct;
 
   ProductEntity({
     this.numberOfProducts,
     this.price,
     this.nameProduct,
+    this.imgProduct,
   });
 
   ProductEntity.fromDbMap(dynamic obj) {
@@ -19,6 +22,7 @@ class ProductEntity {
     numberOfProducts = obj['numberOfProducts'];
     price = obj['price'];
     nameProduct = obj['nameProduct'];
+    imgProduct = obj['imgProduct'];
   }
 
   Map<String, dynamic> toDbMap() {
@@ -27,6 +31,7 @@ class ProductEntity {
       'numberOfProducts': numberOfProducts,
       'price': price,
       'nameProduct': nameProduct,
+      'imgProduct': imgProduct,
     };
   }
 }

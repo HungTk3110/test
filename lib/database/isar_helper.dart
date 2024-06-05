@@ -17,51 +17,46 @@ class IsarHelper {
     );
   }
 
-  Future<List<ProductEntity>> getAllNote() async {
+  Future<List<ProductEntity>> getAllProduct() async {
     final allNote = await isar.productEntitys.where().findAll();
     return allNote;
   }
 
-  Future<ProductEntity?> getNoteById(Id id) async {
-    final note = isar.productEntitys.getSync(id);
-    return note;
+  Future<ProductEntity?> getProductById(Id id) async {
+    final Product = isar.productEntitys.getSync(id);
+    return Product;
   }
 
-  Future<void> insertNote({
-    required String title,
-    required String describe,
-    required int color,
+  Future<void> insertProduct({
+    required List<ProductEntity> product,
   }) async {
-    final note = ProductEntity(
-
-    );
-
     await isar.writeTxn(() async {
-      isar.productEntitys.put(note);
+      isar.productEntitys.putAll(product);
     });
   }
 
-  Future<void> deleteNoteById(Id id) async {
+  Future<void> deleteProductById(Id id) async {
     await isar.writeTxn(() async {
       isar.productEntitys.delete(id);
     });
   }
 
-  Future<void> updateNote({
-    required ProductEntity note,
+  Future<void> updateProduct({
+    required ProductEntity product,
     required String title,
     required String describe,
     required int color,
   }) async {
     await isar.writeTxn(() async {
-
-
-      await isar.productEntitys.put(note);
+      await isar.productEntitys.put(product);
     });
   }
 
-  Future<List<ProductEntity>> searchNotesByTitle(String title) async {
-    final searchResult = await isar.productEntitys.filter().nameProductStartsWith(title).findAll();
+  Future<List<ProductEntity>> searchProductsByTitle(String title) async {
+    final searchResult = await isar.productEntitys
+        .filter()
+        .nameProductStartsWith(title)
+        .findAll();
     return searchResult;
   }
 }

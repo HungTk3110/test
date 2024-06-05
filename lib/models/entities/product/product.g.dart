@@ -17,18 +17,23 @@ const ProductEntitySchema = CollectionSchema(
   name: r'ProductEntity',
   id: 4867088266565710661,
   properties: {
-    r'nameProduct': PropertySchema(
+    r'imgProduct': PropertySchema(
       id: 0,
+      name: r'imgProduct',
+      type: IsarType.string,
+    ),
+    r'nameProduct': PropertySchema(
+      id: 1,
       name: r'nameProduct',
       type: IsarType.string,
     ),
     r'numberOfProducts': PropertySchema(
-      id: 1,
+      id: 2,
       name: r'numberOfProducts',
       type: IsarType.double,
     ),
     r'price': PropertySchema(
-      id: 2,
+      id: 3,
       name: r'price',
       type: IsarType.long,
     )
@@ -54,6 +59,12 @@ int _productEntityEstimateSize(
 ) {
   var bytesCount = offsets.last;
   {
+    final value = object.imgProduct;
+    if (value != null) {
+      bytesCount += 3 + value.length * 3;
+    }
+  }
+  {
     final value = object.nameProduct;
     if (value != null) {
       bytesCount += 3 + value.length * 3;
@@ -68,9 +79,10 @@ void _productEntitySerialize(
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
 ) {
-  writer.writeString(offsets[0], object.nameProduct);
-  writer.writeDouble(offsets[1], object.numberOfProducts);
-  writer.writeLong(offsets[2], object.price);
+  writer.writeString(offsets[0], object.imgProduct);
+  writer.writeString(offsets[1], object.nameProduct);
+  writer.writeDouble(offsets[2], object.numberOfProducts);
+  writer.writeLong(offsets[3], object.price);
 }
 
 ProductEntity _productEntityDeserialize(
@@ -80,9 +92,10 @@ ProductEntity _productEntityDeserialize(
   Map<Type, List<int>> allOffsets,
 ) {
   final object = ProductEntity(
-    nameProduct: reader.readStringOrNull(offsets[0]),
-    numberOfProducts: reader.readDoubleOrNull(offsets[1]),
-    price: reader.readLongOrNull(offsets[2]),
+    imgProduct: reader.readStringOrNull(offsets[0]),
+    nameProduct: reader.readStringOrNull(offsets[1]),
+    numberOfProducts: reader.readDoubleOrNull(offsets[2]),
+    price: reader.readLongOrNull(offsets[3]),
   );
   object.id = id;
   return object;
@@ -98,8 +111,10 @@ P _productEntityDeserializeProp<P>(
     case 0:
       return (reader.readStringOrNull(offset)) as P;
     case 1:
-      return (reader.readDoubleOrNull(offset)) as P;
+      return (reader.readStringOrNull(offset)) as P;
     case 2:
+      return (reader.readDoubleOrNull(offset)) as P;
+    case 3:
       return (reader.readLongOrNull(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -252,6 +267,160 @@ extension ProductEntityQueryFilter
         includeLower: includeLower,
         upper: upper,
         includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<ProductEntity, ProductEntity, QAfterFilterCondition>
+      imgProductIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'imgProduct',
+      ));
+    });
+  }
+
+  QueryBuilder<ProductEntity, ProductEntity, QAfterFilterCondition>
+      imgProductIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'imgProduct',
+      ));
+    });
+  }
+
+  QueryBuilder<ProductEntity, ProductEntity, QAfterFilterCondition>
+      imgProductEqualTo(
+    String? value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'imgProduct',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ProductEntity, ProductEntity, QAfterFilterCondition>
+      imgProductGreaterThan(
+    String? value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'imgProduct',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ProductEntity, ProductEntity, QAfterFilterCondition>
+      imgProductLessThan(
+    String? value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'imgProduct',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ProductEntity, ProductEntity, QAfterFilterCondition>
+      imgProductBetween(
+    String? lower,
+    String? upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'imgProduct',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ProductEntity, ProductEntity, QAfterFilterCondition>
+      imgProductStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'imgProduct',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ProductEntity, ProductEntity, QAfterFilterCondition>
+      imgProductEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'imgProduct',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ProductEntity, ProductEntity, QAfterFilterCondition>
+      imgProductContains(String value, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'imgProduct',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ProductEntity, ProductEntity, QAfterFilterCondition>
+      imgProductMatches(String pattern, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'imgProduct',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ProductEntity, ProductEntity, QAfterFilterCondition>
+      imgProductIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'imgProduct',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<ProductEntity, ProductEntity, QAfterFilterCondition>
+      imgProductIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'imgProduct',
+        value: '',
       ));
     });
   }
@@ -577,6 +746,19 @@ extension ProductEntityQueryLinks
 
 extension ProductEntityQuerySortBy
     on QueryBuilder<ProductEntity, ProductEntity, QSortBy> {
+  QueryBuilder<ProductEntity, ProductEntity, QAfterSortBy> sortByImgProduct() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'imgProduct', Sort.asc);
+    });
+  }
+
+  QueryBuilder<ProductEntity, ProductEntity, QAfterSortBy>
+      sortByImgProductDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'imgProduct', Sort.desc);
+    });
+  }
+
   QueryBuilder<ProductEntity, ProductEntity, QAfterSortBy> sortByNameProduct() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'nameProduct', Sort.asc);
@@ -631,6 +813,19 @@ extension ProductEntityQuerySortThenBy
     });
   }
 
+  QueryBuilder<ProductEntity, ProductEntity, QAfterSortBy> thenByImgProduct() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'imgProduct', Sort.asc);
+    });
+  }
+
+  QueryBuilder<ProductEntity, ProductEntity, QAfterSortBy>
+      thenByImgProductDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'imgProduct', Sort.desc);
+    });
+  }
+
   QueryBuilder<ProductEntity, ProductEntity, QAfterSortBy> thenByNameProduct() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'nameProduct', Sort.asc);
@@ -673,6 +868,13 @@ extension ProductEntityQuerySortThenBy
 
 extension ProductEntityQueryWhereDistinct
     on QueryBuilder<ProductEntity, ProductEntity, QDistinct> {
+  QueryBuilder<ProductEntity, ProductEntity, QDistinct> distinctByImgProduct(
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'imgProduct', caseSensitive: caseSensitive);
+    });
+  }
+
   QueryBuilder<ProductEntity, ProductEntity, QDistinct> distinctByNameProduct(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
@@ -699,6 +901,12 @@ extension ProductEntityQueryProperty
   QueryBuilder<ProductEntity, int, QQueryOperations> idProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'id');
+    });
+  }
+
+  QueryBuilder<ProductEntity, String?, QQueryOperations> imgProductProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'imgProduct');
     });
   }
 
